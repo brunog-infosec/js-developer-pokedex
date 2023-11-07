@@ -23,6 +23,25 @@ function convertPokemonToLi(pokemon) {
     `
 }
 
+function loadPokemonDetails(pokemon) {
+    return `
+        <div class="pokemon-details">
+            <span class="name">${pokemon.name}</span>
+            <li class="atributes-list">
+                <ul class="abilities">
+                    <p class="paragraph-abilities"> Abilities:</p>
+                    ${pokemon.abilities.map((ability) => `<li class="abilities"> ${ability}<li>`).join('')}
+                </ul>
+                <img src="${pokemon.photo}"
+                     alt="${pokemon.name}"/>
+            </li>
+        </div>
+
+    `
+}
+
+
+
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map(convertPokemonToLi).join('')
