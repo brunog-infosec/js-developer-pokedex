@@ -1,4 +1,5 @@
 const pokemonList = document.getElementById('pokemonList')
+const pokemonDetail = document.getElementById('pokemondetail')
 const loadMoreButton = document.getElementById('loadMoreButton')
 
 const maxRecords = 151
@@ -7,40 +8,31 @@ let offset = 0;
 
 function convertPokemonToLi(pokemon) {
     return `
-        <li class="pokemon ${pokemon.type}">
-            <span class="number">#${pokemon.number}</span>
-            <span class="name">${pokemon.name}</span>
+    <li class="pokemon ${pokemon.type}">
+        <span class="number">#00${pokemon.number}</span>
+        <span class="name">${pokemon.name}</span>
 
-            <div class="detail">
-                <ol class="types">
-                    ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-                </ol>
-
-                <img src="${pokemon.photo}"
-                     alt="${pokemon.name}">
+        <div class="detail">
+            <ol class="types">
+                ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+            </ol>
+            <img src="${pokemon.photo}" alt="${pokemon.name}">
+        </div>    
+        
+        <div class="card" id="${pokemon.name}">
+        <button type="button" onclick="toggleCardInfo(this)">Show Attacks</button>
+            <div class="info">
+                <section>
+                    <ol>
+                        ${pokemon.abilities.map((ability) => `<li class="abilities"> ${ability}</li>`).join('')}
+                    </ol>
+                </section>
             </div>
-        </li>
-    `
-}
-
-function loadPokemonDetails(pokemon) {
-    return `
-        <div class="pokemon-details">
-            <span class="name">${pokemon.name}</span>
-            <li class="atributes-list">
-                <ul class="abilities">
-                    <p class="paragraph-abilities"> Abilities:</p>
-                    ${pokemon.abilities.map((ability) => `<li class="abilities"> ${ability}<li>`).join('')}
-                </ul>
-                <img src="${pokemon.photo}"
-                     alt="${pokemon.name}"/>
-            </li>
         </div>
-
+    </li>          
+    
     `
 }
-
-
 
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
@@ -64,3 +56,4 @@ loadMoreButton.addEventListener('click', () => {
         loadPokemonItens(offset, limit)
     }
 })
+
